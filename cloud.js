@@ -17,9 +17,10 @@ AV.Cloud.define('code2Session', async ({ params }) => {
       searchParams: {
         ...params,
         grant_type: 'authorization_code'
-      }
+      },
+      responseType: 'json'
     })
-    return body.data
+    return body
   } catch (error) {
     return error
   }
