@@ -20,8 +20,8 @@ AV.Cloud.define('code2Session', async ({ params }) => {
       },
       responseType: 'json'
     })
-    return body
+    return Promise.resolve(body)
   } catch (error) {
-    return error
+    return Promise.reject(error)
   }
 })
