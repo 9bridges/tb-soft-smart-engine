@@ -1,6 +1,7 @@
 const AV = require('leanengine')
 const fs = require('fs')
 const path = require('path')
+const got = require('got')
 
 /**
  * 加载 functions 目录下所有的云函数
@@ -10,6 +11,9 @@ fs.readdirSync(path.join(__dirname, 'functions')).forEach(file => {
 })
 
 // 微信登录凭证校验
-AV.Cloud.define('code2Session', async request => {
-  return 'Hello world!'
+AV.Cloud.define('code2Session', async ({ params }) => {
+  const { body } = await got('https://api.weixin.qq.com/sns/jscode2session', {
+    searchParams: params
+  })
+  return body.data
 })
