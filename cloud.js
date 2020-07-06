@@ -12,8 +12,15 @@ fs.readdirSync(path.join(__dirname, 'functions')).forEach(file => {
 
 // 微信登录凭证校验
 AV.Cloud.define('code2Session', async ({ params }) => {
-  const { body } = await got('https://api.weixin.qq.com/sns/jscode2session', {
-    searchParams: params
-  })
-  return body.data
+  try {
+    const { body } = await got('https://api.weixin.qq.com/sns/jscode2session', {
+      searchParams: {
+        ...params,
+        grant_type: 'authorization_code'
+      }
+    })
+    return body.data
+  } catch (error) {
+    return error
+  }
 })
